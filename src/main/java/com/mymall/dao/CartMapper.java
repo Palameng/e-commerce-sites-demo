@@ -1,6 +1,6 @@
-package com.my.dao;
+package com.mymall.dao;
 
-import com.my.pojo.Cart;
+import com.mymall.pojo.Cart;
 
 public interface CartMapper {
     int deleteByPrimaryKey(Integer id);

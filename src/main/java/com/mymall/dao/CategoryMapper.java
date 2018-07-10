@@ -1,6 +1,6 @@
-package com.my.dao;
+package com.mymall.dao;
 
-import com.my.pojo.Category;
+import com.mymall.pojo.Category;
 
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer id);
