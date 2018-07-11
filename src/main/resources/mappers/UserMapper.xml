@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mymall.dao.UserMapper">
+
+
     <resultMap id="BaseResultMap" type="com.mymall.pojo.User">
         <constructor>
             <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
@@ -15,19 +17,27 @@
             <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
         </constructor>
     </resultMap>
+
+
     <sql id="Base_Column_List">
     id, username, password, email, phone, question, answer, role, create_time, update_time
   </sql>
+
+
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from mmall_user
         where id = #{id,jdbcType=INTEGER}
     </select>
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mmall_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+
     <insert id="insert" parameterType="com.mymall.pojo.User">
     insert into mmall_user (id, username, password, 
       email, phone, question, 
@@ -38,6 +48,8 @@
       #{answer,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, now(),
       now())
   </insert>
+
+
     <insert id="insertSelective" parameterType="com.mymall.pojo.User">
         insert into mmall_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -105,6 +117,8 @@
             </if>
         </trim>
     </insert>
+
+
     <update id="updateByPrimaryKeySelective" parameterType="com.mymall.pojo.User">
         update mmall_user
         <set>
@@ -138,6 +152,8 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+
     <update id="updateByPrimaryKey" parameterType="com.mymall.pojo.User">
     update mmall_user
     set username = #{username,jdbcType=VARCHAR},
@@ -151,4 +167,17 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+    <select id="checkUsername" parameterType="string" resultType="int">
+        select count(1) from mmall_user
+        where username = #{username}
+    </select>
+
+    <select id="selectLogin" resultType="BaseResultMap" parameterType="map">
+        select <include refid="Base_Column_List" /> from mmall_user
+        where username = #{username}
+        and password = #{password}
+    </select>
+
 </mapper>
