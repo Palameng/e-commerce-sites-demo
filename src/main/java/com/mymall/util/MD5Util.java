@@ -1,7 +1,5 @@
 package com.mymall.util;
 
-import org.springframework.util.StringUtils;
-
 import java.security.MessageDigest;
 
 /**

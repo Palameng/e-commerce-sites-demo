@@ -3,12 +3,12 @@ package com.mymall.service;
 import com.mymall.common.ServerResponse;
 import com.mymall.pojo.User;
 
-public interface IUserService {
+public interface UserService {
     //登录
     ServerResponse<User> login(String username, String password);
 
     //注册
-    ServerResponse register(User user);
+    ServerResponse<String> register(User user);
 
     //校验账号类型（账号或邮箱）的有效性
     ServerResponse<String> checkValid(String str, String type);
@@ -24,4 +24,9 @@ public interface IUserService {
 
     //登录后修改密码
     ServerResponse<String> resetPassword(String passwordOld, String passwordNew, User user);
+
+    //更新用户信息
+    ServerResponse<User> updateInformation(User user);
+
+    ServerResponse<User> getInformation(Integer userId);
 }

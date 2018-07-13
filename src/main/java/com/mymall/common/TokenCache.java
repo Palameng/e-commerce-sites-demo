@@ -31,14 +31,14 @@ public class TokenCache {
 
     public static String getKey(String key){
         String value = null;
-
         try {
             value = localCache.get(key);
-            if ("null".equals(value)){
+            if("null".equals(value)){
                 return null;
             }
+            return value;
         }catch (Exception e){
-            logger.error("localCache get error", e);
+            logger.error("localCache get error",e);
         }
         return null;
     }

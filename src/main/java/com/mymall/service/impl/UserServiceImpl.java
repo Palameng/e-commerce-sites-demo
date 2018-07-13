@@ -5,7 +5,7 @@ import com.mymall.common.ServerResponse;
 import com.mymall.common.TokenCache;
 import com.mymall.dao.UserMapper;
 import com.mymall.pojo.User;
-import com.mymall.service.IUserService;
+import com.mymall.service.UserService;
 import com.mymall.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@Service("iUserService")
-public class UserServiceImpl implements IUserService {
+@Service("userService")
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
@@ -166,5 +166,44 @@ public class UserServiceImpl implements IUserService {
         }
 
         return ServerResponse.createByErrorMessage("密码更新失败");
+    }
+
+    @Override
+    public ServerResponse<User> updateInformation(User user) {
+        //用户名不更新
+        //email也要进行校验，检验新email是否存在
+        int resultCount = userMapper.checkEmailByUserId(user.getEmail(), user.getId());
+
+        if (resultCount > 0){
+            return ServerResponse.createByErrorMessage("邮箱已被占用");
+        }
+
+        User updateUser = new User();
+
+        updateUser.setId(user.getId());
+        updateUser.setEmail(user.getEmail());
+        updateUser.setPhone(user.getPhone());
+        updateUser.setQuestion(user.getQuestion());
+        updateUser.setAnswer(user.getAnswer());
+
+        int updateCount = userMapper.updateByPrimaryKeySelective(updateUser);
+
+        if (updateCount > 0){
+            return ServerResponse.createBySuccess("更新成功", updateUser);
+        }
+
+        return ServerResponse.createByErrorMessage("更新失败");
+    }
+
+    @Override
+    public ServerResponse<User> getInformation(Integer userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+
+        if (user == null){
+            return ServerResponse.createByErrorMessage("找不到当前用户");
+        }
+
+        user.setPassword(StringUtils.EMPTY);
+        return ServerResponse.createBySuccess(user);
     }
 }
