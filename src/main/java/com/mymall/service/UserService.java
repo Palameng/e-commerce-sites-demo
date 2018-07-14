@@ -28,5 +28,9 @@ public interface UserService {
     //更新用户信息
     ServerResponse<User> updateInformation(User user);
 
+    //获取用户详细信息
     ServerResponse<User> getInformation(Integer userId);
+
+    //检查用户角色
+    ServerResponse checkAdminRole(User user);
 }
