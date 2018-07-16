@@ -25,7 +25,7 @@ public class CategoryManageController {
     @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping(value = "add_category.do", method = RequestMethod.POST)
+    @RequestMapping(value = "add_category.do", method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse addCategory(HttpSession session, String categoryName,
                                       @RequestParam(value = "parentId", defaultValue = "0") int parentId){
@@ -43,7 +43,7 @@ public class CategoryManageController {
         }
     }
 
-    @RequestMapping(value = "set_category_name.do", method = RequestMethod.POST)
+    @RequestMapping(value = "set_category_name.do", method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse setCategoryName(HttpSession session, Integer categoryId, String categoryName){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
@@ -60,4 +60,41 @@ public class CategoryManageController {
             return ServerResponse.createByErrorMessage("非管理员登录");
         }
     }
+
+    @RequestMapping(value = "get_category.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse getChildrenParallelCategory(HttpSession session, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId){
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+
+        if (user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
+        }
+
+        //校验是否为管理员
+        if (userService.checkAdminRole(user).isSuccess()){
+            //查询平级子节点信息
+            return categoryService.getChildrenParallelCategory(categoryId);
+        }else {
+            return ServerResponse.createByErrorMessage("非管理员登录");
+        }
+    }
+
+    @RequestMapping(value = "get_deep_category.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse getCategoryAndDeepChildrenCategory(HttpSession session, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId){
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+
+        if (user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
+        }
+
+        //校验是否为管理员
+        if (userService.checkAdminRole(user).isSuccess()){
+            //查询当前节点的id和递归子节点的id
+            return categoryService.selectCategoryAndChildrenById(categoryId);
+        }else {
+            return ServerResponse.createByErrorMessage("非管理员登录");
+        }
+    }
+
 }
