@@ -7,4 +7,6 @@ public interface ProductService {
     ServerResponse saveOrUpdateProduct(Product product);
 
     ServerResponse<String> setSaleStatus(Integer productId, Integer status);
+
+    ServerResponse<Object> manageProductDetail(Integer productId);
 }

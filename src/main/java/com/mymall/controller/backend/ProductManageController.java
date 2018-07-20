@@ -55,4 +55,21 @@ public class ProductManageController {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
     }
+
+    @RequestMapping("detail.do")
+    @ResponseBody
+    public ServerResponse getDetail(HttpSession session, Integer productId, Integer status){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+
+        if (user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员未登录请登录");
+        }
+
+        if (userService.checkAdminRole(user).isSuccess()){
+            return productService.manageProductDetail(productId);
+        }else {
+            return ServerResponse.createByErrorMessage("无权限操作");
+        }
+    }
+
 }

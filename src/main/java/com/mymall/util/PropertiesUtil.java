@@ -17,6 +17,7 @@ public class PropertiesUtil {
 
     private static Properties props;
 
+    //加载文件流
     static {
         String fileName = "mmall.properties";
         props = new Properties();
