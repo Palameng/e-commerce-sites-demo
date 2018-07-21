@@ -1,19 +1,25 @@
 package com.mymall.controller.backend;
 
+import com.google.common.collect.Maps;
 import com.mymall.common.Const;
 import com.mymall.common.ResponseCode;
 import com.mymall.common.ServerResponse;
 import com.mymall.pojo.Product;
 import com.mymall.pojo.User;
+import com.mymall.service.FileService;
 import com.mymall.service.ProductService;
 import com.mymall.service.UserService;
+import com.mymall.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/manage/product/")
@@ -24,6 +30,9 @@ public class ProductManageController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private FileService fileService;
 
     @RequestMapping("save.do")
     @ResponseBody
@@ -111,4 +120,33 @@ public class ProductManageController {
         }
     }
 
+    @RequestMapping("upload.do")
+    @ResponseBody
+    public ServerResponse upload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request){
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+
+        if (user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员未登录请登录");
+        }
+
+        if (userService.checkAdminRole(user).isSuccess()){
+            //1 指定上传的path，这个方式会指定到webapp下
+            String path = request.getSession().getServletContext().getRealPath("upload");
+
+            //2 上传，先把文件存到webapp下，再提交到ftp
+            String targetFileName = fileService.upload(file, path);
+
+            //3 上传成功后，组装一个ftp图片路径给前端使用
+            String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName;
+
+            //4 组装到hashmap里返回
+            Map fileMap = Maps.newHashMap();
+            fileMap.put("uri", targetFileName);
+            fileMap.put("url", url);
+            return ServerResponse.createBySuccess(fileMap);
+        }else {
+            return ServerResponse.createByErrorMessage("无权限操作");
+        }
+    }
 }
