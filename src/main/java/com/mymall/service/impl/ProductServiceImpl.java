@@ -171,7 +171,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         //3
-        PageInfo pageResult = new PageInfo(productList);    //将sql的list作为参数传递给pageinfo构造函数
+        PageInfo pageResult = new PageInfo(productList);    //将sql的list作为参数传递给pageinfo构造函数，取得分页结果
         pageResult.setList(productListVoList);  //将volist作为参数传入pageinfo的setlist函数完成设置
 
 
@@ -210,6 +210,11 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> productList = productMapper.selectByNameAndProductId(productName, productId);
         List<ProductListVo> productListVoList = Lists.newArrayList(); //声明一个前端需要的数据vo
+
+        for(Product productItem : productList){
+            ProductListVo productListVo = assembleProductListVo(productItem);
+            productListVoList.add(productListVo);
+        }
 
         PageInfo pageResult = new PageInfo(productList);    //将sql的list作为参数传递给pageinfo构造函数
         pageResult.setList(productListVoList);  //将volist作为参数传入pageinfo的setlist函数完成设置
