@@ -16,6 +16,8 @@ https://blog.csdn.net/u013257679/article/details/52295106/
 2）如果修改了包名或者项目名，确保pom文件中build标签和一些关于修改文件名的标签内容匹配；  
 3）spring的版本和ide不兼容；  
 4）尝试降低Autowired的警告级别，因为上述第三点中提示有Spring团队不提倡直接在内部属性上加autowired。  
+### 6 PageInfo处理分页结果的时候为什么不直接使用volist而先要用dao层的请求结果传入？  
+http://coding.imooc.com/learn/questiondetail/10968.html  
 
 
 ## 其他操作  
@@ -23,3 +25,6 @@ https://blog.csdn.net/u013257679/article/details/52295106/
 https://www.cnblogs.com/prettrywork/p/7904378.html  
 ### 2 Guava Cache学习  
 https://blog.csdn.net/u012881904/article/details/79263787  
+### 3 模糊查询的一些技巧  
+https://bbs.csdn.net/topics/320222905  
+
