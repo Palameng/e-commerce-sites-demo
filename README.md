@@ -1,5 +1,5 @@
 # e-commerce-sites-demo  
-练手项目  
+该项目为个人学习慕课网课程学习记录。  
   
 ## 问题记录  
 ### 1 Idea在pom.xml中添加了mybatis-generator插件后，右侧的maven projects中并未显示这个插件。  
@@ -27,4 +27,24 @@ https://www.cnblogs.com/prettrywork/p/7904378.html
 https://blog.csdn.net/u012881904/article/details/79263787  
 ### 3 模糊查询的一些技巧  
 https://bbs.csdn.net/topics/320222905  
+
+## 测试说明
+这里的接口返回都为json格式。
+登录接口：  
+（POST请求,BODY里填充username=admin,password=admin）http://47.107.39.251/user/login.do
+### 1 商品后台管理
+#### 1.1 商品添加/更新
+更新商品：  
+http://47.107.39.251/manage/product/save.do?categoryId=1&name=三星电视机&subtitle=促销&mainImage=abc.jpg&subImages=test.jpg&detail=detailtext&price=1000&stock=100&status=1&id=26  
+添加商品：  
+http://47.107.39.251/manage/product/save.do?categoryId=1&name=三星电视机&subtitle=促销&mainImage=abc.jpg&subImages=test.jpg&detail=detailtext&price=1000&stock=100&status=1  
+#### 1.2 商品详情
+http://47.107.39.251/manage/product/detail.do?productId=26  
+#### 1.3 商品列表
+http://47.107.39.251/manage/product/list.do  
+#### 1.4 商品模糊查找
+http://47.107.39.251/manage/product/search.do?productName=美的  
+#### 1.5 设置售卖状态
+http://47.107.39.251/manage/product/set_sale_status.do?productId=26&status=2  
+
 
