@@ -1,6 +1,8 @@
 # e-commerce-sites-demo  （施工中）
 该项目为个人学习慕课网课程学习记录。  
-  
+
+--------------------------------------------------------------
+
 ## 问题记录  
 ### 1 Idea在pom.xml中添加了mybatis-generator插件后，右侧的maven projects中并未显示这个插件。  
 解决方法: 新建一个plugins标签和pluginManager同级，然后把generator插件配置放进去。  
@@ -19,6 +21,7 @@ https://blog.csdn.net/u013257679/article/details/52295106/
 ### 6 PageInfo处理分页结果的时候为什么不直接使用volist而先要用dao层的请求结果传入？  
 http://coding.imooc.com/learn/questiondetail/10968.html  
 
+--------------------------------------------------------------
 
 ## 其他操作  
 ### 1 去除sql黄色辣眼睛背景  
@@ -27,6 +30,8 @@ https://www.cnblogs.com/prettrywork/p/7904378.html
 https://blog.csdn.net/u012881904/article/details/79263787  
 ### 3 模糊查询的一些技巧  
 https://bbs.csdn.net/topics/320222905  
+
+--------------------------------------------------------------
 
 ## 测试说明
 这里的接口返回都为json格式。后台管理测试需要走登录，接口为：  
@@ -113,23 +118,23 @@ http://47.107.39.251/order/query_order_pay_status.do?orderNo=1492091102371
 ### 7 购物车管理
 这里维护一个商品ID和数量的内容。  
 #### 7.1 添加购物车
-http://localhost:8088/cart/add.do?productId=26&count=10    
+http://47.107.39.251/cart/add.do?productId=26&count=10    
 #### 7.2 删除购物车中的商品
-http://localhost:8088/cart/delete_product.do?productIds=26  
+http://47.107.39.251/cart/delete_product.do?productIds=26  
 #### 7.3 获取购物车商品数
-http://localhost:8088/cart/get_cart_product_count.do  
+http://47.107.39.251/cart/get_cart_product_count.do  
 #### 7.4 购物车中商品列表
-http://localhost:8088/cart/list.do  
+http://47.107.39.251/cart/list.do  
 #### 7.5 选中购物车中的商品
-http://localhost:8088/cart/select.do?productId=28  
+http://47.107.39.251/cart/select.do?productId=28  
 #### 7.6 全选
-http://localhost:8088/cart/select_all.do  
+http://47.107.39.251/cart/select_all.do  
 #### 7.7 反选
-http://localhost:8088/cart/un_select.do?productId=28  
+http://47.107.39.251/cart/un_select.do?productId=28  
 #### 7.8 全不选
-http://localhost:8088/cart/un_select_all.do  
+http://47.107.39.251/cart/un_select_all.do  
 #### 7.9 更新购物车中的商品信息
-http://localhost:8088/cart/update.do?productId=26&count=1  
+http://47.107.39.251/cart/update.do?productId=26&count=1  
 
 
 
