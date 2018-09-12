@@ -3,6 +3,7 @@ package com.mymall.service.impl;
 import com.google.common.collect.Lists;
 import com.mymall.service.FileService;
 import com.mymall.util.FTPUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,10 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Service("fileService")
+@Slf4j
 public class FileServiceImpl implements FileService {
 
-    private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
+    // private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
     @Override
     public String upload(MultipartFile file, String path){
@@ -26,7 +28,7 @@ public class FileServiceImpl implements FileService {
 
         //制定文件名
         String uploadFileName = UUID.randomUUID().toString() + "." + fileExtensionName;
-        logger.info("开始上传文件，上传文件的名字：{}，上传的路径：{}，新文件名：{}", fileName, path, uploadFileName);
+        log.info("开始上传文件，上传文件的名字：{}，上传的路径：{}，新文件名：{}", fileName, path, uploadFileName);
 
         //通过传递下来的path参数创建路径，这里先把文件集中到tomcat下
         File fileDir = new File(path);
@@ -49,7 +51,7 @@ public class FileServiceImpl implements FileService {
             targetFile.delete();
 
         } catch (IOException e) {
-            logger.error("上传失败", e);
+            log.error("上传失败", e);
             return null;
         }
 
