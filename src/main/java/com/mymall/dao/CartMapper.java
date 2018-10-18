@@ -1,6 +1,5 @@
 package com.mymall.dao;
 
-import com.alipay.api.domain.Car;
 import com.mymall.pojo.Cart;
 import org.apache.ibatis.annotations.Param;
 
