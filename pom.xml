@@ -333,5 +333,48 @@
             </plugin>
         </plugins>
 
+        <!-- Maven隔离环境配置,具体配置到哪一个隔离环境应该读取resources下哪个文件夹 -->
+        <resources>
+            <resource>
+                <directory>src/main/resources.${deploy.type}</directory>
+                <excludes>
+                    <exclude>*.jsp</exclude>
+                </excludes>
+            </resource>
+
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+
+        </resources>
+
     </build>
+
+    <profiles>
+        <!-- 默认环境 -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <deploy.type>dev</deploy.type>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>beta</id>
+            <properties>
+                <deploy.type>beta</deploy.type>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <properties>
+                <deploy.type>prod</deploy.type>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>
